@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './ui/poli_page.dart';
+import './ui/beranda.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,23 +11,28 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Klinik App',
       debugShowCheckedModeBanner: false,
-      // Tambahan theme sendiri
       theme: ThemeData(
-        primarySwatch: Colors.teal,
-        scaffoldBackgroundColor: Colors.grey[100], // Warna background layar
+        useMaterial3: true,
+        // Mengatur skema warna utama secara global
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.teal,
+          primary: Colors.teal,
+        ),
+        scaffoldBackgroundColor: Colors.grey[100],
+
         // Tema AppBar global
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: Colors.teal,
           foregroundColor: Colors.white,
           elevation: 2,
         ),
 
         // Tema Teks global
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           bodyMedium: TextStyle(fontSize: 16.0, color: Colors.black87),
         ),
       ),
-      home: PoliPage(),
+      home: Beranda(),
     );
   }
 }
