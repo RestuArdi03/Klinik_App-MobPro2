@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Klinik App',
       debugShowCheckedModeBanner: false,
+      // Tambahan theme sendiri
       theme: ThemeData(
         primarySwatch: Colors.teal,
         scaffoldBackgroundColor: Colors.grey[100], // Warna background layar
