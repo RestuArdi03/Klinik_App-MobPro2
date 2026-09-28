@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:klinik_app/ui/poli_page.dart';
+import '../service/poli_service.dart';
 import '../model/poli.dart';
 import 'poli_detail.dart';
 
@@ -35,12 +37,16 @@ class _PoliFormState extends State<PoliForm> {
 
   _tombolSimpan() {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         Poli poli = new Poli(namaPoli: _namaPoliCtrl.text);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => PoliDetail(poli: poli)),
-        );
+        await PoliService().simpan(poli).then((value) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PoliPage(),
+            ), //ada sedikit yang diubah di bagian routenya yang sebelumnya MaterialPageRoute(builder: (context) => PoliDetail(poli: value))); yang dimana ini mengarah ke halaman Detail Poli akhirnya saya ubah agar mengarah ke halaman Data Poli
+          );
+        });
       },
       child: const Text('Simpan'),
     );
