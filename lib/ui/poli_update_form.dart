@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/poli.dart';
-import 'poli_detail.dart';
+import '../service/poli_service.dart';
+import 'poli_page.dart';
 
 class PoliUpdateForm extends StatefulWidget {
   final Poli poli;
@@ -13,12 +14,18 @@ class _PoliUpdateFormState extends State<PoliUpdateForm> {
   final _formKey = GlobalKey<FormState>();
   final _namaPoliCtrl = TextEditingController();
 
+  Future<Poli> getData() async {
+    Poli data = await PoliService().getById(widget.poli.id.toString());
+    setState(() {
+      _namaPoliCtrl.text = data.namaPoli;
+    });
+    return data;
+  }
+
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _namaPoliCtrl.text = widget.poli.namaPoli;
-    });
+    getData();
   }
 
   @override
@@ -45,13 +52,18 @@ class _PoliUpdateFormState extends State<PoliUpdateForm> {
 
   _tombolSimpan() {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         Poli poli = new Poli(namaPoli: _namaPoliCtrl.text);
-        Navigator.pop(context);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => PoliDetail(poli: poli)),
-        );
+        String id = widget.poli.id.toString();
+        await PoliService().ubah(poli, id).then((value) {
+          Navigator.pop(context);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PoliPage(),
+            ), //Sama seperti pada Poli Form, disini routenya juga saya ubah ke Poli Page
+          );
+        });
       },
       child: const Text("Simpan Perubahan"),
     );

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:klinik_app/ui/poli_page.dart';
 import '../service/poli_service.dart';
 import '../model/poli.dart';
-import 'poli_detail.dart';
+import 'poli_page.dart';
 
 class PoliForm extends StatefulWidget {
   const PoliForm({Key? key}) : super(key: key);
