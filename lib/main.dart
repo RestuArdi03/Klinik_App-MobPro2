@@ -1,38 +1,41 @@
 import 'package:flutter/material.dart';
+import './helpers/user_info.dart';
 import './ui/beranda.dart';
+import './ui/login.dart';
 
-void main() {
-  runApp(MyApp());
-}
+Future<void> main() async {
+  // Wajib dipanggil sebelum mengeksekusi kode async di main (seperti SharedPreferences)
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Klinik App',
+  // Memeriksa token login secara async
+  var token = await UserInfo().getToken();
+  print(token);
+
+  runApp(
+    MaterialApp(
+      title: "Klinik APP",
       debugShowCheckedModeBanner: false,
+
+      // --- Tema yang Anda kustomisasi tetap dipertahankan di sini ---
       theme: ThemeData(
         useMaterial3: true,
-        // Mengatur skema warna utama secara global
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.teal,
           primary: Colors.teal,
         ),
         scaffoldBackgroundColor: Colors.grey[100],
-
-        // Tema AppBar global
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.teal,
           foregroundColor: Colors.white,
           elevation: 2,
         ),
-
-        // Tema Teks global
         textTheme: const TextTheme(
           bodyMedium: TextStyle(fontSize: 16.0, color: Colors.black87),
         ),
       ),
-      home: Beranda(),
-    );
-  }
+
+      // Logika penentuan halaman awal berdasarkan token
+      home: token == null ? const Login() : const Beranda(),
+    ),
+  );
 }
